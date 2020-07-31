@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'serverlessapp
+
+  Sample SAM Template for serverlessapp
+
+  '
+Globals:
+  Function:
+    Timeout: 60
+Resources:
+  GETEC2REGIONSFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: GetEc2Regions
+      Description: sam demo get ec2 regions
+      Role: arn:aws:iam::530108077276:role/mylambdafunction
+      CodeUri: s3://upload-api-file-1/06bccd827fd8e8f5e5ece512dd7e8d26
+      Handler: main.lambda_handler
+      Runtime: python3.6
+      Events:
+        GetEc2RegionsAPI:
+          Type: Api
+          Properties:
+            Path: /getregions
+            Method: get
+Outputs:
+  GetEc2RegionsAPI:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod
+        /getregions/
+  GETEC2REGIONSFunction:
+    Description: Hello World Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - GETEC2REGIONSFunction
+      - Arn
